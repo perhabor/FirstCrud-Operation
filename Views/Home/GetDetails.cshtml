@@ -1,0 +1,77 @@
+﻿@model EmployeeViewModel
+
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<form asp-action="GetDetails" method="get" asp-route-id="/@Model.address/@Model.email">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6 pull-left">
+                <div class="form-group">
+                    <label for="Address">Cities</label>
+                    @Html.DropDownListFor(m => m.address, new SelectList(ViewBag.address), new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-6 pull-right">
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                        @Html.DropDownListFor(m => m.email, new SelectList(ViewBag.email), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class=" col-lg-2">
+                    <button class="form-control btn btn-primary" type="submit" value="submit" asp-route-id="/@Model.address/@Model.email">Submit</button>
+        </div>
+        </div>
+</form>
+
+
+<div class="text-center">
+    <h1 class="display-4">Employee Details</h1>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+
+        @{ int i = 0; }
+        @if (Model.Employees.Count() > 0)
+
+            @foreach (var item in Model.Employees)
+            {
+                i++;
+                <tr>
+
+                    <td>@i</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Age</td>
+                    <td>@item.Gender</td>
+                    <td>@item.Email</td>
+                    <td>@item.Address</td>
+                    <td>
+                        <a asp-action="Register" asp-route-id="@item.Id" class="btn btn-warning btn-sm text-white">Edit</a>
+
+                        <a asp-action="DeleteEmployee" asp-route-id="@item.Id" class="btn btn-danger btn-sm text-white">Delete</a>
+                    </td>
+                </tr>
+            }
+
+    </table>
+</div>
+
+
